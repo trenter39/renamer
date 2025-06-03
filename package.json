@@ -1,0 +1,16 @@
+{
+  "type": "module",
+  "dependencies": {
+    "inquirer": "^12.6.3"
+  },
+  "name": "renamer",
+  "version": "1.0.0",
+  "description": "a CLI program to rename files with extensions",
+  "main": "main.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "node main.js"
+  },
+  "author": "trenter39",
+  "license": "MIT"
+}
