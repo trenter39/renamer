@@ -4,6 +4,7 @@
     "inquirer": "^12.6.3"
   },
   "name": "renamer",
+  "bin":"main.js",
   "version": "1.0.0",
   "description": "a CLI program to rename files with extensions",
   "main": "main.js",
