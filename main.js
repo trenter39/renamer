@@ -9,7 +9,7 @@ process.on('SIGINT', () => {
     process.exit(0);
 });
 
-(async () => {
+async function runRenamer() {
     try {
         const folderPath = await input({
             message: `Enter directory of files, or leave empty for current directory`,
@@ -71,7 +71,7 @@ process.on('SIGINT', () => {
                     continue;
                 }
             }
-            if (newName.trim() == ''){
+            if (newName.trim() == '') {
                 console.log(`Skipped: ${file}${fileExt}`);
                 continue;
             }
@@ -83,13 +83,37 @@ process.on('SIGINT', () => {
             }
         }
         console.log('Done.');
-    } catch(err) {
-        if (err instanceof ExitPromptError) {
-            console.log("Bye!");
-            process.exit(0);
-        } else {
-            console.log('Unexpected error:', err);
-            process.exit(1);
+    } catch (err) {
+        errorCheck(err);
+    }
+}
+
+(async () => {
+    while (true) {
+        try {
+            await runRenamer();
+
+            const again = await confirm({
+                message: "Do you want to rename more files?",
+                default: false,
+            });
+
+            if (!again) {
+                console.log("Bye!");
+                break;
+            }
+        } catch (err) {
+            errorCheck(err);
         }
     }
 })();
+
+function errorCheck(err) {
+    if (err instanceof ExitPromptError) {
+        console.log("Bye!");
+        process.exit(0);
+    } else {
+        console.error('Unexpected error:', err);
+        process.exit(1);
+    }
+}
